@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Web (Angular) — run only if package.json exists in web/
+      - name: Web install
+        if: hashFiles('web/**/package.json') != ''
+        run: |
+          cd web
+          npm ci || npm install
+      - name: Web lint+test
+        if: hashFiles('web/**/package.json') != ''
+        run: |
+          cd web
+          npm run lint --if-present
+          npm test --if-present
+
+      # API (Node) — run only if package.json exists in api/
+      - name: API install
+        if: hashFiles('api/**/package.json') != ''
+        run: |
+          cd api
+          npm ci || npm install
+      - name: API lint+test
+        if: hashFiles('api/**/package.json') != ''
+        run: |
+          cd api
+          npm run lint --if-present
+          npm test --if-present

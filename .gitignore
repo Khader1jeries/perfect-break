@@ -1,0 +1,25 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Node/TS
+node_modules/
+dist/
+build/
+coverage/
+.env
+.env.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Angular
+.angular/
+.angular/cache/
+*.ngsummary.json
+
+# JetBrains / VSCode
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
